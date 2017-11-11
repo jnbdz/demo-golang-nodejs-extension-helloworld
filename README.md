@@ -27,9 +27,36 @@ If you run into some errors you might need to install other packages on your sys
 ## :clipboard: Example
 
 ```js
-const print = require("demo-golang-nodejs-extension-helloworld");
+const msg = require("demo-golang-nodejs-extension-helloworld");
 
-console.log('4+5=', print.msg(4, 5));
+console.log(msg.hello());
+```
+
+## :recycle: Testing
+To run the unit test, you need to make sure you have [Jest][jest_link] installed.
+
+You can install it with [npm][npm_link]:
+
+```sh
+npm install --save-dev jest
+```
+
+Or you can install it with [yarn][yarn_link]:
+
+```sh
+yarn add --dev jest
+```
+
+Or globally with [npm][npm_link]:
+
+```sh
+sudo npm install -g jest --unsafe-perm=true --allow-root
+```
+
+### Running the tests
+
+```sh
+npm test
 ```
 
 ## :memo: Documentation
@@ -210,3 +237,7 @@ See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
 
 [patreon]: https://www.patreon.com/jnbdz
 [travis]: https://travis-ci.org/jnbdz/demo-golang-nodejs-extension-helloworld
+
+[jest_link]: https://facebook.github.io/jest/
+[npm_link]: https://npmjs.com/
+[yarn_link]: https://yarnpkg.com/
