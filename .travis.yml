@@ -1,0 +1,31 @@
+sudo: required
+language: node_js
+notifications:
+  email: false
+node_js:
+  - "6.3.1"
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+
+env:
+  - CXX=g++-4.8
+
+cache:
+  directories:
+    - node_modules
+
+before_install:
+  - npm install -g npm@latest
+
+install:
+  - export CXX="g++-4.8"
+  - export DISPLAY=':99.0'
+  - npm install
+
+script:
+  - npm run dev

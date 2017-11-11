@@ -1,0 +1,30 @@
+{
+  "name": "demo-golang-nodejs-extension-helloworld",
+  "version": "1.0.0",
+  "description": "Demo of golang node.js extension Hello World.",
+  "main": "demo.js",
+  "scripts": {
+    "test": "jest",
+    "install": "go build -buildmode c-archive -o src/helloworld.a src/helloworld.go && node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jnbdz/demo-golang-nodejs-extension-helloworld.git"
+  },
+  "keywords": [
+    "golang",
+    "go",
+    "extension",
+    "helloworld",
+    "hello-world",
+    "tutorial",
+    "demo"
+  ],
+  "author": "Jean-Nicolas Boulay <jn@yaloub.com>",
+  "license": "MIT",
+  "gypfile": true,
+  "bugs": {
+    "url": "https://github.com/jnbdz/demo-golang-nodejs-extension-helloworld/issues"
+  },
+  "homepage": "https://github.com/jnbdz/demo-golang-nodejs-extension-helloworld#readme"
+}
