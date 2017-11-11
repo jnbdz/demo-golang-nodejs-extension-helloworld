@@ -1,6 +1,5 @@
 #include "helloworld.h"
 #include <node.h>
-#include <string>
 
 namespace demo {
 

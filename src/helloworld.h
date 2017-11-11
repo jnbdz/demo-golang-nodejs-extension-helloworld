@@ -5,7 +5,7 @@
 /* Start of preamble from import "C" comments.  */
 
 
-#line 3 "/home/jean-nicolas/Projects/demo-hello-world/src/helloworld.go"
+#line 3 "/home/jean-nicolas/Projects/demo-golang-nodejs-extension-helloworld/src/helloworld.go"
 
 #include <stdlib.h>
 

@@ -1,2 +1,1 @@
-const msg = require('./build/Release/node-helloworld');
-console.log(msg.hello());
+module.exports = require('./build/Release/node-helloworld');
