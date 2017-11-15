@@ -62,8 +62,7 @@ npm test
 ## :memo: Documentation
 Based on this tutorial: https://www.krishnaraman.net/blog/node-addons-written-in-go
 
-When creating an Node.js extension with Golang you first need to create your `go` script file.
-Make sure to import `C` package:
+When creating an Node.js extension with Golang make sure to import `C` package in your Golang script:
 
 ```go
 import "C"
@@ -74,10 +73,15 @@ Then add the function or functions you want to implement in your extension.
 For this demo:
 
 ```go
-func Sum(x, y float64) float64 {
-	return x + y
+func HelloWorld() *C.char {
+	cs := C.CString("Hello World!")
+	return cs
 }
 ```
+
+When using strings you need to set the return type as `*C.char`.
+
+All your strings need to be set in `C.CString()` method.
 
 You can keep `main()` function empty:
 
@@ -85,7 +89,7 @@ You can keep `main()` function empty:
 func main() {}
 ```
 
-Then you need to add your `.cc` C/C++ file.
+Then you need to add your `.cc` (C/C++) file.
 
 For this demo the name of the file is `node-helloworld.cc`.
 
@@ -98,89 +102,50 @@ First you need to include these two libraries:
 
 The `helloworld.h` will be generated later.
 
-The `<node.h>` is for this code to talk to Node.js.
+The `<node.h>` is the Node.js library.
 
 Then you add the rest of the code:
 
 ```c
-namespace calc {
+#include "helloworld.h"
+#include <node.h>
 
-  using v8::FunctionCallbackInfo;
-  using v8::Isolate;
-  using v8::Local;
-  using v8::Object;
-  using v8::String;
-  using v8::Value;
-  using v8::Number;
-  using v8::Exception;
+namespace demo {
 
-  void add(const FunctionCallbackInfo<Value>& args) {
-    Isolate* isolate = args.GetIsolate();
+using v8::FunctionCallbackInfo;
+using v8::Isolate;
+using v8::Local;
+using v8::Object;
+using v8::String;
+using v8::Value;
 
-    // Check the number of arguments passed.
-    if (args.Length() < 2) {
-      // Throw an Error that is passed back to JavaScript
-      isolate->ThrowException(Exception::TypeError(
-          String::NewFromUtf8(isolate, "Wrong number of arguments")));
-      return;
-    }
+void Method(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+  args.GetReturnValue().Set(String::NewFromUtf8(isolate, HelloWorld()));
+}
 
-    // Check the argument types
-    if (!args[0]->IsNumber() || !args[1]->IsNumber()) {
-      isolate->ThrowException(Exception::TypeError(
-          String::NewFromUtf8(isolate, "Wrong arguments")));
-      return;
-    }
+void init(Local<Object> exports) {
+  NODE_SET_METHOD(exports, "hello", Method);
+}
 
-    // Perform the operation
-    double total = Sum(args[0]->NumberValue(), args[1]->NumberValue());
-    Local<Number> num = Number::New(isolate, total);
+NODE_MODULE(helloworld, init)
 
-    // Set the return value (using the passed in
-    // FunctionCallbackInfo<Value>&)
-    args.GetReturnValue().Set(num);
-  }
-
-  void init(Local<Object> exports) {
-    NODE_SET_METHOD(exports, "add", add);
-  }
-
-  NODE_MODULE(helloworld, init)
 }
 ```
 
-You need to add the C++ methods. That you want to have access to in Node.js.
+You need to add the C++ methods that you want to have access to in Node.js.
 
 For this demo we are using:
 
 ```c
-void add(const FunctionCallbackInfo<Value>& args)
-```
-
-It is a good idea to validate the function arguments before passing them to golang scripts.
-
-```c
-// Check the number of arguments passed.
-if (args.Length() < 2) {
-  // Throw an Error that is passed back to JavaScript
-  isolate->ThrowException(Exception::TypeError(
-      String::NewFromUtf8(isolate, "Wrong number of arguments")));
-  return;
-}
-
-// Check the argument types
-if (!args[0]->IsNumber() || !args[1]->IsNumber()) {
-  isolate->ThrowException(Exception::TypeError(
-      String::NewFromUtf8(isolate, "Wrong arguments")));
-  return;
-}
+void Method(const FunctionCallbackInfo<Value>& args)
 ```
 
 The last part is to create the methods for Node.js:
 
 ```c
 void init(Local<Object> exports) {
-NODE_SET_METHOD(exports, "add", add);
+NODE_SET_METHOD(exports, "hello", Method);
 }
 
 NODE_MODULE(helloworld, init)
