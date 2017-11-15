@@ -176,13 +176,7 @@ if (!args[0]->IsNumber() || !args[1]->IsNumber()) {
 }
 ```
 
-Then you use you golang method:
-
-```c
-double total = Sum(args[0]->NumberValue(), args[1]->NumberValue());
-```
-
-The rest is for Node.js:
+The last part is to create the methods for Node.js:
 
 ```c
 void init(Local<Object> exports) {
@@ -195,7 +189,7 @@ NODE_MODULE(helloworld, init)
 You use `NODE_SET_METHOD` to set the methods you want to use inside of Node.js:
 
 ```c
-NODE_SET_METHOD(exports, "add", add);
+NODE_SET_METHOD(exports, "hello", Method);
 ```
 
 You also need this file at the root of your project: `binding.gyp`. It is self explanatory.

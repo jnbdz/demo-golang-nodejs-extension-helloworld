@@ -251,3 +251,11 @@ conf/*
 #############
 
 *.a
+
+#############
+## Terraform
+#############
+
+.terraform
+*.tfstate
+*.tfstate.backup

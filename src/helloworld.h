@@ -5,11 +5,6 @@
 /* Start of preamble from import "C" comments.  */
 
 
-#line 3 "/home/jean-nicolas/Projects/demo-golang-nodejs-extension-helloworld/src/helloworld.go"
-
-#include <stdlib.h>
-
-#line 1 "cgo-generated-wrapper"
 
 
 /* End of preamble from import "C" comments.  */
